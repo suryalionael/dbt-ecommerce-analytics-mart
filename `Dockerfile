@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY dbt_project.yml .
 COPY models/ models/
+COPY macros/ macros/
+COPY snapshots/ snapshots/
+COPY seeds/ seeds/
 COPY tests/ tests/
 COPY docs/ docs/
 

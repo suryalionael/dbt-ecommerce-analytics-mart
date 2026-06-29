@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: stg_customers
+    tests:
+      - unique: customer_unique_id
+      - not_null: [customer_id, customer_zip_code_prefix]
+      - accepted_values:
+          column_name: customer_marital_status
+          values: ['single', 'married', 'divorced', 'widowed']

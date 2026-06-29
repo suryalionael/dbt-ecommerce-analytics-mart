@@ -2,34 +2,36 @@ dbt-ecommerce-analytics-mart/
 ├── dbt_project.yml
 ├── models/
 │   ├── staging/
-│   │   ├── olist_customers.sql
-│   │   ├── olist_orders.sql
-│   │   ├── olist_order_items.sql
-│   │   ├── olist_products.sql
-│   │   └── olist_sellers.sql
+│   │   ├── stg_customers.sql
+│   │   ├── stg_orders.sql
+│   │   ├── stg_order_items.sql
+│   │   ├── stg_products.sql
+│   │   └── stg_sellers.sql
 │   ├── intermediate/
-│   │   ├── fct_orders.sql
-│   │   ├── dim_customers.sql
-│   │   ├── dim_products.sql
-│   │   ├── dim_dates.sql
-│   │   └── dim_sellers.sql
+│   │   ├── int_fct_orders.sql
+│   │   ├── int_dim_customers.sql
+│   │   ├── int_dim_products.sql
+│   │   ├── int_dim_dates.sql
+│   │   └── int_dim_sellers.sql
 │   └── marts/
 │       └── mart_orders.sql
+├── macros/
+│   └── common_utils.sql
+├── snapshots/
+│   └── snapshot_customers.sql
+├── seeds/
+│   └── seed_customers.csv
 ├── tests/
-│   ├── staging/
-│   │   ├── olist_customers_tests.yml
-│   │   ├── olist_orders_tests.yml
-│   │   ├── olist_order_items_tests.yml
-│   │   ├── olist_products_tests.yml
-│   │   └── olist_sellers_tests.yml
-│   ├── intermediate/
-│   │   ├── fct_orders_tests.yml
-│   │   ├── dim_customers_tests.yml
-│   │   ├── dim_products_tests.yml
-│   │   ├── dim_dates_tests.yml
-│   │   └── dim_sellers_tests.yml
-│   └── marts/
-│       └── mart_orders_tests.yml
+│   ├── stg_customers.yml
+│   ├── stg_orders.yml
+│   ├── stg_order_items.yml
+│   ├── stg_products.yml
+│   ├── stg_sellers.yml
+│   ├── int_fct_orders.yml
+│   ├── int_dim_customers.yml
+│   ├── int_dim_products.yml
+│   ├── int_dim_dates.yml
+│   └── int_dim_sellers.yml
 ├── docs/
 │   ├── index.md
 │   ├── architecture.md
@@ -41,5 +43,4 @@ dbt-ecommerce-analytics-mart/
 │       ├── data_model.png
 │       └── dashboard.png
 ├── README.md
-├── Dockerfile
-└── .github/workflows/ci.yml
+└── Dockerfile

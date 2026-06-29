@@ -4,7 +4,7 @@ This project is a production-quality Analytics Engineering portfolio project usi
 
 ## Architecture
 
-The project follows the dbt best practices with a staging → intermediate → marts architecture.
+The project follows the dbt best practices with a raw → staging → intermediate → marts architecture.
 
 ## Setup
 

@@ -1,18 +1,18 @@
 {{ config(materialized='table') }}
 
 WITH fct_orders AS (
-    SELECT * FROM {{ ref('intermediate_fct_orders') }},
+    SELECT * FROM {{ ref('int_fct_orders') }},
     dim_customers AS (
-        SELECT * FROM {{ ref('intermediate_dim_customers') }}
+        SELECT * FROM {{ ref('int_dim_customers') }}
     ),
     dim_products AS (
-        SELECT * FROM {{ ref('intermediate_dim_products') }}
+        SELECT * FROM {{ ref('int_dim_products') }}
     ),
     dim_dates AS (
-        SELECT * FROM {{ ref('intermediate_dim_dates') }}
+        SELECT * FROM {{ ref('int_dim_dates') }}
     ),
     dim_sellers AS (
-        SELECT * FROM {{ ref('intermediate_dim_sellers') }}
+        SELECT * FROM {{ ref('int_dim_sellers') }}
     )
 SELECT
     f.order_id,
