@@ -1,0 +1,45 @@
+dbt-ecommerce-analytics-mart/
+├── dbt_project.yml
+├── models/
+│   ├── staging/
+│   │   ├── olist_customers.sql
+│   │   ├── olist_orders.sql
+│   │   ├── olist_order_items.sql
+│   │   ├── olist_products.sql
+│   │   └── olist_sellers.sql
+│   ├── intermediate/
+│   │   ├── fct_orders.sql
+│   │   ├── dim_customers.sql
+│   │   ├── dim_products.sql
+│   │   ├── dim_dates.sql
+│   │   └── dim_sellers.sql
+│   └── marts/
+│       └── mart_orders.sql
+├── tests/
+│   ├── staging/
+│   │   ├── olist_customers_tests.yml
+│   │   ├── olist_orders_tests.yml
+│   │   ├── olist_order_items_tests.yml
+│   │   ├── olist_products_tests.yml
+│   │   └── olist_sellers_tests.yml
+│   ├── intermediate/
+│   │   ├── fct_orders_tests.yml
+│   │   ├── dim_customers_tests.yml
+│   │   ├── dim_products_tests.yml
+│   │   ├── dim_dates_tests.yml
+│   │   └── dim_sellers_tests.yml
+│   └── marts/
+│       └── mart_orders_tests.yml
+├── docs/
+│   ├── index.md
+│   ├── architecture.md
+│   ├── setup.md
+│   ├── data_model.md
+│   └── screenshots/
+│       ├── architecture.png
+│       ├── setup.png
+│       ├── data_model.png
+│       └── dashboard.png
+├── README.md
+├── Dockerfile
+└── .github/workflows/ci.yml

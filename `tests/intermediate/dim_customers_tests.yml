@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: dim_customers
+    tests:
+      - unique: customer_id
+      - not_null: [customer_id, customer_unique_id]

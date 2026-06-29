@@ -1,0 +1,14 @@
+name: dbt_ecommerce_analytics_mart
+version: '1.0.0'
+config-version: 2
+
+profile: default
+
+models:
+  dbt_ecommerce_analytics_mart:
+    materialized: table
+    tests:
+      - unique
+      - not_null
+      - relationships
+      - accepted_values

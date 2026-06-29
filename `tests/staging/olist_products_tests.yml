@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: olist_products
+    tests:
+      - unique: product_id
+      - not_null: [product_id, product_category_name]
