@@ -8,11 +8,11 @@ dbt-ecommerce-analytics-mart/
 │   │   ├── stg_products.sql
 │   │   └── stg_sellers.sql
 │   ├── intermediate/
-│   │   ├── int_fct_orders.sql
 │   │   ├── int_dim_customers.sql
-│   │   ├── int_dim_products.sql
 │   │   ├── int_dim_dates.sql
-│   │   └── int_dim_sellers.sql
+│   │   ├── int_dim_products.sql
+│   │   ├── int_dim_sellers.sql
+│   │   └── int_fct_orders.sql
 │   └── marts/
 │       └── mart_orders.sql
 ├── macros/
@@ -27,10 +27,9 @@ dbt-ecommerce-analytics-mart/
 │   ├── stg_order_items.yml
 │   ├── stg_products.yml
 │   ├── stg_sellers.yml
-│   ├── int_fct_orders.yml
 │   ├── int_dim_customers.yml
-│   ├── int_dim_products.yml
 │   ├── int_dim_dates.yml
+│   ├── int_dim_products.yml
 │   └── int_dim_sellers.yml
 ├── docs/
 │   ├── index.md
