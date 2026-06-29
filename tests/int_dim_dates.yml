@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: int_dim_dates
+    tests:
+      - unique: order_date
+      - not_null: [order_date]

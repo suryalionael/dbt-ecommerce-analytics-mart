@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: fct_orders
+    tests:
+      - unique: [order_id, product_id, seller_id]
+      - not_null: [order_id, customer_id, product_id, seller_id]
