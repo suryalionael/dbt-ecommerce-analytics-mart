@@ -48,7 +48,10 @@ jobs:
           python-version: "3.11"
 
       - name: Install dbt
-        run: pip install dbt-postgres==1.8.2
+        # Pin dbt-core explicitly, not just dbt-postgres: without this, pip
+        # can resolve a dbt-core pre-release ("Fusion") that doesn't support
+        # the Postgres adapter yet. See README "Lessons learned".
+        run: pip install "dbt-core>=1.8,<1.9" "dbt-postgres>=1.8,<1.9"
 
       - name: dbt deps
         run: dbt deps
