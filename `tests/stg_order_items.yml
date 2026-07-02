@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: stg_order_items
-    tests:
-      - unique: [order_id, order_item_id]
-      - not_null: [order_id, product_id, seller_id]
