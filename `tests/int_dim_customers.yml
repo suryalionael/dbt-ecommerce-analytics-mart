@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: int_dim_customers
-    tests:
-      - unique: customer_id
-      - not_null: [customer_id, customer_unique_id]

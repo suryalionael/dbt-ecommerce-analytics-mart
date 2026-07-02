@@ -1,15 +1,9 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
-WORKDIR /app
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git libpq-dev gcc \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY dbt_project.yml .
-COPY models/ models/
-COPY macros/ macros/
-COPY snapshots/ snapshots/
-COPY seeds/ seeds/
-COPY tests/ tests/
-COPY docs/ docs/
+RUN pip install --no-cache-dir dbt-postgres==1.8.2
 
-RUN pip install dbt-core dbt-postgres
-
-CMD ["dbt", "run"]
+WORKDIR /usr/app

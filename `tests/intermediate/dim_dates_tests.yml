@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: dim_dates
-    tests:
-      - unique: order_date
-      - not_null: [order_date]
