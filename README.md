@@ -1,7 +1,6 @@
 # E-Commerce Analytics Mart
 
-![CI](https://github.com/<GITHUB_USERNAME>/<REPO_NAME>/actions/workflows/ci.yml/badge.svg)
-<!-- Replace <GITHUB_USERNAME>/<REPO_NAME> once this repo has a remote. -->
+![CI](https://github.com/suryalionael/dbt-ecommerce-analytics-mart/actions/workflows/ci.yml/badge.svg)
 
 A dbt project turning the real [Olist Brazilian E-Commerce dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
 (Kaggle) into a single source of truth for revenue, customers, and product
