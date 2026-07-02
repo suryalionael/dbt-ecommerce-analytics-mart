@@ -2,26 +2,59 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
 
 jobs:
-  build:
+  dbt:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: dbt
+          POSTGRES_PASSWORD: dbt
+          POSTGRES_DB: olist
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U dbt -d olist"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: dbt
+      POSTGRES_PASSWORD: dbt
+      POSTGRES_DB: olist
+      DBT_PROFILES_DIR: ${{ github.workspace }}
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
+      - name: Install psql client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
-      - name: Install dependencies
+      - name: Load real Olist CSVs into Postgres (raw schema)
         run: |
-          pip install dbt-core dbt-postgres
+          sudo mkdir -p /seeds_raw
+          sudo cp seeds/raw/olist/*.csv /seeds_raw/
+          PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -U $POSTGRES_USER -d $POSTGRES_DB -f docker/init/01_init_raw.sql
 
-      - name: Run dbt tests
-        run: dbt test
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dbt
+        run: pip install dbt-postgres==1.8.2
+
+      - name: dbt deps
+        run: dbt deps
+
+      - name: dbt build
+        run: dbt build
+
+      - name: dbt docs generate
+        run: dbt docs generate
