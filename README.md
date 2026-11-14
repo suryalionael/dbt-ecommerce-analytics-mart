@@ -9,6 +9,7 @@ performance. **No synthetic or generated data is used anywhere.**
 ## Table of contents
 
 - [Overview](#overview)
+- [Analytics layer](#analytics-layer)
 - [Architecture](#architecture)
 - [Data lineage](#data-lineage)
 - [Technologies](#technologies)
@@ -30,6 +31,36 @@ with a single revenue definition:
 - **`dim_products`** (`marts/core`) — product dimension with sales rollups.
 - **`dim_customers`** (`marts/customer`) — customer lifetime value/recency.
 - **`fct_revenue_monthly`** (`marts/finance`) — the official monthly revenue metric layer.
+- **`marts/analytics`** — six window-function and CASE-driven marts: RFM segments, cohort retention, monthly growth, category product ranks, product Pareto/ABC, and customer order gaps. Findings: [`docs/ANALYTICAL_FINDINGS.md`](docs/ANALYTICAL_FINDINGS.md).
+
+## Analytics layer
+
+`models/marts/analytics/` answers the questions the core marts could not:
+who is valuable, who is leaving, how concentrated revenue is, and how long
+customers wait between orders. Every model is a `table`, uses `ref()`, and
+starts with a comment block stating the business question, grain, metric
+definitions, and limitations.
+
+| Model | Grain | Window / CASE logic |
+|---|---|---|
+| `mart_customer_rfm` | customer_unique_id | `NTILE(5)` scores, `CASE` segments |
+| `mart_cohort_retention` | cohort month × months since first purchase | `DATE_TRUNC`, cohort joins |
+| `mart_revenue_growth` | calendar month | `LAG`, running `SUM() OVER`, 3-month `AVG() OVER` |
+| `mart_product_rank_by_category` | top-3 product per category | `ROW_NUMBER`, `RANK` |
+| `mart_product_pareto` | product with sales | running `SUM() OVER`, ABC `CASE` |
+| `mart_order_gaps` | repeat order per customer | `LAG`, `PERCENTILE_CONT` |
+
+Run just this layer:
+
+```bash
+dbt build --select analytics
+```
+
+The headline results, with the exact numbers from this dataset, are in
+[`docs/ANALYTICAL_FINDINGS.md`](docs/ANALYTICAL_FINDINGS.md). Short version:
+repeat purchasing is rare (3.1% of customers), the At Risk RFM segment holds
+24.2% of revenue, month-1 retention is 0.46%, and 28.1% of products generate
+80.0% of revenue.
 
 ## Architecture
 
@@ -65,6 +96,13 @@ flowchart TB
     fct_orders --> dim_products
     fct_orders --> fct_revenue_monthly
     int_customer_lifetime --> dim_customers
+    fct_orders --> mart_customer_rfm
+    fct_orders --> mart_cohort_retention
+    fct_orders --> mart_order_gaps
+    fct_revenue_monthly --> mart_revenue_growth
+    fct_orders --> mart_product_pareto
+    fct_orders --> mart_product_rank_by_category
+    dim_products --> mart_product_rank_by_category
 ```
 
 This is a simplified, hand-maintained summary — the authoritative,
@@ -93,6 +131,7 @@ models/
     core/          fct_orders, dim_products
     customer/      dim_customers
     finance/       fct_revenue_monthly
+    analytics/     RFM, cohort retention, revenue growth, product ranks, Pareto/ABC, order gaps
   marts/_exposures.yml   Power BI exposure declaration
 seeds/raw/olist/   real Olist CSVs (git-tracked), loaded via docker/init/01_init_raw.sql
 seed_data/         empty on purpose - see dbt_project.yml comment on seed-paths
